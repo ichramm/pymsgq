@@ -45,7 +45,7 @@ def _msgbuf(size):
     class __msgbuf(ctypes.Structure):
         _pack_ = 1
         _fields_ = [
-                ('mtype', ctypes.c_long, 8*8),
+                ('mtype', ctypes.c_long, 8*ctypes.sizeof(ctypes.c_long)),
                 ('mtext', ctypes.c_byte*size,),
                 ]
     return __msgbuf()
@@ -57,7 +57,7 @@ class _msgdsbuf(ctypes.Structure):
     _pack_ = 1
     _fields_ = [
             ('dummy_1', ctypes.c_byte*DS_STRUCT_DUMMY_OFFSET_SIZE),
-            ('msg_qbytes', ctypes.c_long, 8*8),
+            ('msg_qbytes', ctypes.c_long, 8*ctypes.sizeof(ctypes.c_long)),
             ('dummy_2', ctypes.c_byte*DS_STRUCT_DUMMY_PADDING_SIZE)
             ]
 
