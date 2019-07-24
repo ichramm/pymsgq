@@ -21,6 +21,7 @@ from __future__ import unicode_literals
 
 import ctypes
 import os
+import sys
 import errno
 import logging
 libc=ctypes.CDLL('libc.so.6',use_errno=True)
@@ -35,6 +36,10 @@ IPC_NOWAIT=2048
 IPC_STAT=2
 IPC_SET=1
 MSG_NOERROR=4096
+
+# not available in python3
+unicode = str if sys.version_info.major == 3 else unicode
+
 #msgqbuf
 def _msgbuf(size):
     class __msgbuf(ctypes.Structure):
@@ -57,7 +62,7 @@ class _msgdsbuf(ctypes.Structure):
             ]
 
 class Msgq(object):
-    def __init__(self, key, create=False, max_msg_buff_sz=512*1024, max_msgq_buff_total_sz=1024*1024*16, perms=0666, passive = True):
+    def __init__(self, key, create=False, max_msg_buff_sz=512*1024, max_msgq_buff_total_sz=1024*1024*16, perms=0o666, passive = True):
         flags=perms
         if create:
             flags=IPC_CREAT|perms
