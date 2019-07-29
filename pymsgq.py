@@ -110,7 +110,7 @@ class Msgq(object):
                 return -1
             if eno == errno.EINTR:
                 return -2
-            raise Exception('send msgq error:%s' % os.strerror(cyptes.get_errno()))
+            raise Exception('send msgq error:%s' % os.strerror(ctypes.get_errno()))
         return err
 
     def recv(self, mtype=0, flags=IPC_NOWAIT):
